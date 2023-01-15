@@ -9,6 +9,7 @@ import com.melihcanozturk.repository.CustomerDao;
 import com.melihcanozturk.service.CustomerService;
 import com.melihcanozturk.util.BAUtils;
 import com.melihcanozturk.util.HibernateUtils;
+import com.melihcanozturk.util.ShoppingMenu;
 
 public class CustomerController {
 
@@ -17,13 +18,14 @@ public class CustomerController {
 	private ProductController productController = new ProductController();
 	private ProductEvaluateController evaluateController = new ProductEvaluateController();
 
+	
 	public CustomerController() {
 		customerService = new CustomerService();
 	}
 
-	public List<Customer> findByUserName(String username) {
+	public List<Customer> findByEmail(String email) {
 
-		return customerDao.findByUserName(username);
+		return customerDao.findByEmail(email);
 	}
 
 	public void listCustomer() {
@@ -62,45 +64,52 @@ public class CustomerController {
 
 	private void customerManager(Customer customer) {
 
-		HashMap<Integer, String> menuItems = new HashMap<Integer, String>();
-		menuItems.put(1, "Buy a product");
-		menuItems.put(2, "Comment");
-		menuItems.put(3, "List out-of-stock products");
-		menuItems.put(4, "List all");
-		menuItems.put(5, "List comments by Product");
-		menuItems.put(6, "Exit");
+		boolean kontrol = true;
+		while (kontrol) {
 
-		int key = BAUtils.menu(menuItems);
+			HashMap<Integer, String> menuItems = new HashMap<Integer, String>();
+			menuItems.put(1, "Buy a product");
+			menuItems.put(2, "Comment");
+			menuItems.put(3, "List out-of-stock products");
+			menuItems.put(4, "List all");
+			menuItems.put(5, "List comments by Product");
+			menuItems.put(6, "Exit");
+			menuItems.put(7, "return menu");
+			int key = BAUtils.menu(menuItems);
 
-		switch (key) {
-		case 1:
-			productController.productBuy(customer);
+			switch (key) {
+			case 1:
+				productController.productBuy(customer);
 
-			break;
-		case 2:
-			evaluateController.comment2(customer); // yapılacak.
-			break;
-		case 3:
-			productController.stockControl();
-			break;
-		case 4:
-			productController.listProducts();
-			break;
-		case 5:
-			productController.showComment();
-			break;
-		case 6:
-			System.exit(0);
-
-		default:
-			break;
+				break;
+			case 2:
+				evaluateController.comment2(customer); // yapılacak.
+				break;
+			case 3:
+				productController.stockControl();
+				break;
+			case 4:
+				productController.listProducts();
+				break;
+			case 5:
+				productController.showComment();
+				break;
+			case 6:
+				System.out.println("sistem kapatılıyor.");
+				System.exit(0);
+			case 7:
+				kontrol = false;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
 	public void signIn() {
-		String username = BAUtils.readString("Enter username: ");
+		String email = BAUtils.readString("Enter email: ");
 		String password = BAUtils.readString("Enter password: ");
-		List<Customer> customer = findByUserName(username);
+		List<Customer> customer = findByEmail(email);
 
 		if (customer.isEmpty()) {
 			System.out.println("böyle bir kullanıcı yok. lütfen kayıt olunuz...");

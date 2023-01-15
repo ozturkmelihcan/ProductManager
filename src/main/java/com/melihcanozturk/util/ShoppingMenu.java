@@ -2,13 +2,12 @@ package com.melihcanozturk.util;
 
 import java.util.HashMap;
 
-
 import com.melihcanozturk.controller.AdminController;
 import com.melihcanozturk.controller.CategoryController;
 import com.melihcanozturk.controller.CustomerController;
 import com.melihcanozturk.controller.ProductController;
 import com.melihcanozturk.controller.ProductEvaluateController;
-
+import com.melihcanozturk.entity.Customer;
 
 public class ShoppingMenu {
 
@@ -16,7 +15,7 @@ public class ShoppingMenu {
 	private CategoryController categoryController = new CategoryController();
 	private CustomerController customerController = new CustomerController();
 	private ProductController productController = new ProductController();
-	private ProductEvaluateController productEvaluateController = new ProductEvaluateController();
+	private ProductEvaluateController evaluateController = new ProductEvaluateController();
 
 	public ShoppingMenu() {
 		super();
@@ -26,7 +25,7 @@ public class ShoppingMenu {
 	}
 
 	public void menu() {
-		while(true) {
+		while (true) {
 			HashMap<Integer, String> menuItems = new HashMap<Integer, String>();
 			menuItems.put(1, "Admin");
 			menuItems.put(2, "Customer Login");
@@ -34,7 +33,7 @@ public class ShoppingMenu {
 			int key = BAUtils.menu(menuItems);
 			switch (key) {
 			case 1:
-			
+
 				adminMenu();
 				break;
 			case 2:
@@ -42,42 +41,45 @@ public class ShoppingMenu {
 				break;
 
 			case 3:
-			System.exit(0);
+				System.exit(0);
 			default:
 				break;
 			}
 		}
-		
+
 	}
 
 	private void adminMenu() {
-		HashMap<Integer, String> menuItems = new HashMap<Integer, String>();
-		menuItems.put(1, "Add Category");
-		menuItems.put(2, "Add Product");
-		menuItems.put(3, "List Customers");
-		menuItems.put(4, "Return menu");
+		while (true) {
 
-		int key = BAUtils.menu(menuItems);
+			HashMap<Integer, String> menuItems = new HashMap<Integer, String>();
+			menuItems.put(1, "Add Category");
+			menuItems.put(2, "Add Product");
+			menuItems.put(3, "List Customers");
+			menuItems.put(4, "Return menu");
 
-		switch (key) {
-		case 1:
-			categoryController.createCategory(); // KISIMLARI DOLDUR....
+			int key = BAUtils.menu(menuItems);
 
-			break;
-		case 2:
-			productController.createProduct();
+			switch (key) {
+			case 1:
+				categoryController.createCategory(); // KISIMLARI DOLDUR....
 
-			break;
-		case 3:
-			customerController.listCustomer();
+				break;
+			case 2:
+				productController.createProduct();
 
-			break;
-		case 4:
-			menu();
-			break;
+				break;
+			case 3:
+				customerController.listCustomer();
 
-		default:
-			break;
+				break;
+			case 4:
+				menu();
+				break;
+
+			default:
+				break;
+			}
 		}
 	}
 
@@ -91,11 +93,11 @@ public class ShoppingMenu {
 		switch (key) {
 		case 1:
 			customerController.signUp();
-			
+
 			break;
 		case 2:
 			customerController.signIn();
-			
+
 			break;
 		default:
 			break;

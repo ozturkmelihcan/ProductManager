@@ -115,14 +115,14 @@ public class CustomerDao implements IRepository<Customer> {
 		return null;
 	}
 
-	public List<Customer> findByUserName(String username) {
+	public List<Customer> findByEmail(String email) {
 		Transaction transaction = null;
 		List<Customer> customer = null;
 		try (Session session = dataBaseConnectionHibernate()) {
 			transaction = session.beginTransaction();
 			
 			customer = session.createQuery(
-					"select user from Customer as user where user.firstName ='" + username + "'")
+					"select user from Customer as user where user.email ='" + email + "'")
 					.getResultList();
 			
 			transaction.commit();
