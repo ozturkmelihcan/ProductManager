@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.OneToMany;
 
 @Entity
@@ -22,15 +22,15 @@ public class Customer extends User {
 
 	private String identity;
 
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	private List<Product> product;
 
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "customer")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
 	private List<ProductEvaluate> productEvaluates;
 
 	public Customer() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public Customer(String firstName, String lastName, String email, String password, String identity,
@@ -94,7 +94,4 @@ public class Customer extends User {
 				+ getFirstName() + ", getLastName()=" + getLastName() + ", getEmail()=" + getEmail() + "]";
 	}
 
-	
-
-	
 }

@@ -5,46 +5,12 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+
 
 import com.melihcanozturk.entity.Product;
 
-
 public class ProductDao implements IRepository<Product> {
 
-//	private Session session;
-//	private Transaction transaction;
-//
-//	private void openTransaction() {
-//
-//		session = dataBaseConnectionHibernate();
-//		transaction = session.beginTransaction();
-//
-//	}
-//
-//	private void accessTransaction() {
-//		transaction.commit();
-//		session.close();
-//	}
-//
-//	private void errorTransaction() {
-//		if (transaction != null) {
-//			transaction.rollback();
-//		}
-//
-//	}
-//	
-//	@Override
-//	public void create(Product t) {
-//		try {
-//			openTransaction();
-//			session.save(t);
-//			accessTransaction();
-//		} catch (Exception e) {
-//			errorTransaction();
-//		}
-//	}
-	
 	@Override
 	public void create(Product entity) {
 		Session session = null;
@@ -97,7 +63,7 @@ public class ProductDao implements IRepository<Product> {
 				product.setPrice(entity.getPrice());
 				product.setProductEvaluates(entity.getProductEvaluates());
 				product.setStock(entity.getStock());
-				
+
 				session = dataBaseConnectionHibernate();
 				session.getTransaction().begin();
 				session.update(product);
@@ -121,10 +87,10 @@ public class ProductDao implements IRepository<Product> {
 		String query = "select product from Product as product";
 		TypedQuery<Product> typedQuery = session.createQuery(query, Product.class);
 		List<Product> productList = typedQuery.getResultList();
-		
+
 		return productList;
 	}
-	
+
 	public List<Product> listAll2() {
 		Session session = null;
 		session = dataBaseConnectionHibernate();
@@ -141,14 +107,14 @@ public class ProductDao implements IRepository<Product> {
 		Product product;
 		try {
 			product = session.find(Product.class, id);
-		
+
 			if (product != null) {
-				System.out.println("Product Found--> " + product);
-			
+				System.out.println("Product Found--> " + product.getName());
+
 				return product;
 			} else {
 				System.out.println("Product not found");
-				
+
 				return null;
 			}
 		} catch (Exception e) {
@@ -156,7 +122,7 @@ public class ProductDao implements IRepository<Product> {
 		} finally {
 			session.close();
 		}
-		
+
 		return null;
 	}
 

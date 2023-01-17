@@ -9,23 +9,20 @@ import com.melihcanozturk.entity.Product;
 import com.melihcanozturk.entity.ProductEvaluate;
 import com.melihcanozturk.service.CategoryService;
 import com.melihcanozturk.service.CustomerService;
-import com.melihcanozturk.service.ProductEvaluateService;
+
 import com.melihcanozturk.service.ProductService;
 import com.melihcanozturk.util.BAUtils;
 
 public class ProductController {
 
-	private ProductEvaluateService productEvaluateService = new ProductEvaluateService();
-
-	private Product product = new Product();
 	private CustomerService customerService = new CustomerService();
 	private ProductService productService = new ProductService();
-	private CategoryController categoryController = new CategoryController();
+
 	private CategoryService categoryService = new CategoryService();
 
 	public ProductController() {
 		this.productService = new ProductService();
-		this.productEvaluateService = new ProductEvaluateService();
+
 		this.categoryService = new CategoryService();
 	}
 
@@ -74,11 +71,9 @@ public class ProductController {
 
 	}
 
-	
-
 	public void stockControl() {
 
-		List<Product> list = productService.listAll().stream().filter(p -> p.getStock() < 100)
+		List<Product> list = productService.listAll().stream().filter(p -> p.getStock() < 10)
 				.collect(Collectors.toList());
 		System.out.println(list);
 	}
@@ -87,18 +82,16 @@ public class ProductController {
 		productService.listAll2();
 	}
 
-
 	public void showComment() {
 		Long id = BAUtils.readLong("lütfen yorumlarını görmek istediğiniz ürünün id sini giriniz.");
-	
+
 		Product product = productService.find(id);
-	
-		List<ProductEvaluate>pE = product.getProductEvaluates();
+
+		List<ProductEvaluate> pE = product.getProductEvaluates();
 		for (ProductEvaluate productEvaluate : pE) {
 			System.out.println(productEvaluate);
 		}
-		
-		
+
 	}
 
 }

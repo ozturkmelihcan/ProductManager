@@ -2,14 +2,11 @@ package com.melihcanozturk.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 
 import com.melihcanozturk.entity.Customer;
 import com.melihcanozturk.repository.CustomerDao;
 import com.melihcanozturk.service.CustomerService;
 import com.melihcanozturk.util.BAUtils;
-import com.melihcanozturk.util.HibernateUtils;
-import com.melihcanozturk.util.ShoppingMenu;
 
 public class CustomerController {
 
@@ -18,7 +15,6 @@ public class CustomerController {
 	private ProductController productController = new ProductController();
 	private ProductEvaluateController evaluateController = new ProductEvaluateController();
 
-	
 	public CustomerController() {
 		customerService = new CustomerService();
 	}
@@ -42,12 +38,12 @@ public class CustomerController {
 		boolean numeric = tc.chars().allMatch(Character::isDigit);
 		if (email.contains("@") && !email.startsWith("@")) {
 			if (numeric) {
-				if (tc.length() <= 11) {
+				if (tc.length() == 11) {
 					Customer customer = new Customer(name, lastname, email, password, tc);
 					customerDao.create(customer);
 					System.out.println("başarıyla kayıt yapıldı.");
 				} else {
-					System.out.println("tc 11 haneden fazla olamaz.");
+					System.out.println("tc 11 haneli olmalıdır.");
 				}
 
 			} else {
@@ -83,7 +79,7 @@ public class CustomerController {
 
 				break;
 			case 2:
-				evaluateController.comment2(customer); // yapılacak.
+				evaluateController.comment2(customer);
 				break;
 			case 3:
 				productController.stockControl();

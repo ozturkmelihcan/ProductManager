@@ -26,7 +26,7 @@ public class ProductEvaluate {
 
 	public ProductEvaluate() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public ProductEvaluate(String comment, double point, Product product, Customer customer) {
@@ -81,7 +81,5 @@ public class ProductEvaluate {
 	public String toString() {
 		return "ProductEvaluate [comment=" + comment + ", point=" + point + "]";
 	}
-
-	
 
 }

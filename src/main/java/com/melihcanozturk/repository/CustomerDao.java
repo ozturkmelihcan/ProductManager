@@ -2,12 +2,10 @@ package com.melihcanozturk.repository;
 
 import java.util.List;
 
-
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 
 import com.melihcanozturk.entity.Customer;
 
@@ -90,7 +88,7 @@ public class CustomerDao implements IRepository<Customer> {
 		String query = "select customer from Customer as customer";
 		TypedQuery<Customer> typedQuery = session.createQuery(query, Customer.class);
 		List<Customer> customerList = typedQuery.getResultList();
-		
+
 		return customerList;
 	}
 
@@ -115,25 +113,22 @@ public class CustomerDao implements IRepository<Customer> {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Customer> findByEmail(String email) {
 		Transaction transaction = null;
 		List<Customer> customer = null;
 		try (Session session = dataBaseConnectionHibernate()) {
 			transaction = session.beginTransaction();
-			
-			customer = session.createQuery(
-					"select user from Customer as user where user.email ='" + email + "'")
-					.getResultList();
-			
+			customer = session.createQuery("select user from Customer as user where user.email ='" + email + "'").getResultList();
 			transaction.commit();
-			
 			session.close();
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
-		}return customer;
-		
+		}
+		return customer;
+
 	}
 
 }
